@@ -5,9 +5,10 @@
    </title>
 <style>
 .error {color:red;}
+.align {text-align: center;}
 </style>
 </head>
-<body>
+<body style="background-color:lavender";>
 <?php 
 $nameErr=$EmailErr=$usernameErr=$passErr=$confErr="*";
 $PhoneErr="";
@@ -98,7 +99,8 @@ function test($data) {
    $data = htmlspecialchars($data);
    return $data;}
    ?>
-   <h2>PHP Form Validation Example</h2>
+   <span class=align>
+   <h2><i>SIGN UP</i></h2>
 
    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
    Name: <input type="text" name="name">
@@ -121,6 +123,7 @@ function test($data) {
    <br><br>
    <input type="submit" name="submit" value="Submit">
 </form>
+</span>
 <?php
 if(empty($usernameErr) && empty($passErr) && empty($confErr) && empty($nameErr) && empty($EmailErr) && empty($PhoneErr))
   { 
