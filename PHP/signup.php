@@ -9,27 +9,28 @@
 </head>
 <body>
 <?php 
-$nameErr=$EmailErr=$PhoneErr=$usernameErr=$passErr=$confErr="*";
+$nameErr=$EmailErr=$usernameErr=$passErr=$confErr="*";
+$PhoneErr="";
 $name=$username=$Phone=$pass=$Email=$conf="";
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
 	if(empty($_POST["name"]))
-		$nameErr="required";
+		$nameErr="*required";
 	else
 		{
          $name=test($_POST["name"]);
          if (!preg_match("/^[a-zA-Z ]*$/",$name)) 
-         $nameErr = "Only letters and white space allowed"; 
+         $nameErr = "*Only letters and white space allowed"; 
          else $nameErr="";
       }
 
 	 if (empty($_POST["Email"])) 
-     $EmailErr = "required";
+     $EmailErr = "*required";
 
     else {
      $Email = test($_POST["Email"]);
      if (!preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/",$Email)) 
-      $EmailErr = "Invalid email format"; 
+      $EmailErr = "*Invalid email format"; 
      else $EmailErr="";
      }
    if(empty($_POST["Phone"]))
@@ -44,7 +45,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
    }
    //echo 'phone' . $PhoneErr;
       if(empty($_POST["username"]))
-    $usernameErr="required";
+    $usernameErr="*required";
   else
     {
          $username=test($_POST["username"]);
@@ -59,26 +60,26 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
             $user = $query_row['username'];
            // echo $user . '<br>';
             if(strcmp($username,$user)==0)
-              $usernameErr="not available";
+              $usernameErr="*not available";
           }}
 
          if (!preg_match("/^[a-zA-Z0-9]*$/",$username)) 
-         $usernameErr = "Only letters and digits are allowed"; 
+         $usernameErr = "*Only letters and digits are allowed"; 
       }
       //echo '<br>'. $usernameErr . '<br>';
 
    if(empty($_POST["pass"]))
-    {$passErr="password is required";}
+    {$passErr="*password is required";}
      elseif(strlen($_POST["pass"])<=7) 
-      {$passErr="8 characters required";}
+      {$passErr="*8 characters required";}
        else {$passErr="";} 
    
    if(empty($_POST["conf"]))
-   {$confErr="confirm your password";} 
+   {$confErr="*confirm your password";} 
    else 
    { 
     if ( strcmp($_POST["pass"], $_POST["conf"])!=0) 
-    {$confErr="Enter same password"; }
+    {$confErr="*Enter same password"; }
     else $confErr="";
    }
 
@@ -101,22 +102,22 @@ function test($data) {
 
    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
    Name: <input type="text" name="name">
-   <span class=error>*<?php echo $nameErr;?></span>
+   <span class=error><?php echo $nameErr;?></span>
    <br><br>
    Email: <input type="text" name="Email">
-   <span class=error>*<?php echo $EmailErr;?></span>
+   <span class=error><?php echo $EmailErr;?></span>
    <br><br>
    Phone no.: <input type="text" name="Phone">
    <span class=error><?php echo $PhoneErr;?></span>
    <br><br>
    Choose a username: <input type="text" name="username">
-   <span class=error>*<?php echo $usernameErr;?></span>
+   <span class=error><?php echo $usernameErr;?></span>
    <br><br>
    Password: <input type="password" name="pass">
-   <span class=error>*<?php echo $passErr;?></span>
+   <span class=error><?php echo $passErr;?></span>
    <br><br>
    Confirm Password: <input type="password" name="conf">
-   <span class=error>*<?php echo $confErr;?></span>
+   <span class=error><?php echo $confErr;?></span>
    <br><br>
    <input type="submit" name="submit" value="Submit">
 </form>
@@ -144,7 +145,8 @@ if(empty($usernameErr) && empty($passErr) && empty($confErr) && empty($nameErr) 
      echo "<a href=http://www.facebook.com>Go to Login Page</a>";
 
       @mysqli_close($con);
-      $nameErr=$EmailErr=$PhoneErr=$usernameErr=$passErr=$confErr="*";
+      $nameErr=$EmailErr=$usernameErr=$passErr=$confErr="*";
+      $PhoneErr='*';
     }
     ?>
 </body>
