@@ -9,7 +9,7 @@ background-repeat:repeat-x;
 .error {color: #FF0000;}
 </style>
 <title>
-AUTO-SHARE
+SHARE ur FARE
 </title>
 </head>
 <body> 
@@ -74,7 +74,7 @@ while($row=mysql_fetch_array($results))
 if(strcmp($row["userid"],$userid)==0)
 {
   if(strcmp($row["password"],$password)==0){
- header('Location: welcome.html');
+ header('Location: welcome.php');
 exit;
 }
   else{
