@@ -13,51 +13,52 @@ AUTO-SHARE
 </title>
 </head>
 <body> 
+
 <?php
-$useridErr = $passwordErr = "";
+$useridErr = $passwordErr= "";
 $userid = $password = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-   if (empty($_POST["name"])) {
+   if (empty($_POST["userid"])) {
      $useridErr = "Username is required";
-     } else {
-     $userid = input($_POST["name"]);
+   } else {
+     $userid = test_input($_POST["userid"]);
    }
    
    if (empty($_POST["password"])) {
      $passwordErr = "password is required";
-      } else {
-     $password = input($_POST["password"]);
+   } else {
+     $password = test_input($_POST["password"]);
    }
-     }
+   }
 
-function input($data) {
+function test_input($data) {
    $data = trim($data);
    $data = stripslashes($data);
    $data = htmlspecialchars($data);
    return $data;
 }
 ?>
-<center><h1>AUTO SHARE</h1></center>
-<br><br><br><br><br><br><br>
-<center>
-  <p><span class="error">* required field.</span></p></center>
-<center><form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
- Username: <input type="text" name="userid">
+
+<center><h1>SHARE ur FARE</h1>
+<br><br><br><br><br><br><br><br>
+<p><span class="error">* required field.</span></p>
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
+   username: <input type="text" name="userid">
    <span class="error">* <?php echo $useridErr;?></span>
    <br><br>
-   Password: <input type="password" name="email">
+   password: <input type="text" name="password">
    <span class="error">* <?php echo $passwordErr;?></span>
    <br><br>
    <input type="submit" name="submit" value="Submit"> 
-</form></br>
+</form><br>
 <form action="signup.php">
 <input type="submit" name="Sign Up" value="Sign Up">
 </form><br>
 </form>
 <form action="for_my_password.php">
 <input type="submit" name="Forgotten your Password?"value="Forgotten your Password?">
-</form>
-</center>
+</form></center>
 <?php
 $connect=mysql_connect("localhost","iitkanpur","iitk");
 if(!$connect)
@@ -68,23 +69,19 @@ if(!mysql_select_db("database")){
 die("Failed to select DB:" .mysql_error());
 }
 $results=mysql_query("SELECT * FROM login_table");  
-$check=0;
 while($row=mysql_fetch_array($results))
 {
 if(strcmp($row["userid"],$userid)==0)
 {
   if(strcmp($row["password"],$password)==0){
-    echo "Hello User";
-  }
+ header('Location: welcome.html');
+exit;
+}
   else{
     echo "Wrong password";
   }
-  $check=1;
   break;
 }
-}
-if($check==0)
-{echo "Unknown User";
 }
 ?>
 </body>
