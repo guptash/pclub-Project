@@ -19,10 +19,10 @@ $useridErr = $passwordErr= "";
 $userid = $password = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-   if (empty($_POST["userid"])) {
+   if (empty($_POST["username"])) {
      $useridErr = "Username is required";
    } else {
-     $userid = test_input($_POST["userid"]);
+     $userid = test_input($_POST["username"]);
    }
    
    if (empty($_POST["password"])) {
@@ -44,7 +44,7 @@ function test_input($data) {
 <br><br><br><br><br><br><br><br>
 <p><span class="error">* required field.</span></p>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
-   username: <input type="text" name="userid">
+   username: <input type="text" name="username">
    <span class="error">* <?php echo $useridErr;?></span>
    <br><br>
    password: <input type="text" name="password">
@@ -60,7 +60,7 @@ function test_input($data) {
 <input type="submit" name="Forgotten your Password?"value="Forgotten your Password?">
 </form></center>
 <?php
-$connect=mysql_connect("localhost","iitkanpur","iitk");
+$connect=mysql_connect("localhost","root","iitk");
 if(!$connect)
 {
   die("Failed to connect: " . mysql_error());
@@ -68,13 +68,13 @@ if(!$connect)
 if(!mysql_select_db("database")){
 die("Failed to select DB:" .mysql_error());
 }
-$results=mysql_query("SELECT * FROM login_table");  
+$results=mysql_query("SELECT * FROM users");  
 while($row=mysql_fetch_array($results))
 {
-if(strcmp($row["userid"],$userid)==0)
+if(strcmp($row["username"],$userid)==0)
 {
   if(strcmp($row["password"],$password)==0){
- header('Location: welcome.php');
+ header('Location: welcome.html');
 exit;
 }
   else{
