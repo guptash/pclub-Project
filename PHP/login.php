@@ -18,6 +18,8 @@ SHARE ur FARE
 $useridErr = $passwordErr= "";
 $userid = $password = "";
 
+echo "user trying to login...";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
    if (empty($_POST["username"])) {
      $useridErr = "Username is required";
