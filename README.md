@@ -1,3 +1,4 @@
 pclub-Project
 =============
-Hello World!
+
+Please add a description to your project.
